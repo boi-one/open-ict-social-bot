@@ -8,7 +8,12 @@ Voor ons project hebben wij een bot ontwikkeld om het aspect van socialisatie vo
 - WIP 
 - DIT IS ALLEEN HET BACKEND
 
-Vergeet niet om de .env bestand te encrypten en te vervangen met env.encrypted. Maar wanneer je weer git add/commit/push doet moet je de .env weer terug vervangen met env.encrypted voordat de token weer wordt verwijdert :(((
+Vervang env.encrypted door .env.
+Voordat je iets commit (opslaan) of pusht (versturen naar Git), moet je env.encrypted weer terugzetten in plaats van .env.
+Dit zorgt ervoor dat de token niet in Git terechtkomt, omdat die anders zichtbaar wordt voor anderen.
+Dus eigenlijk:
+Werk met .env lokaal.
+Maar zet het terug naar env.encrypted voordat je je veranderingen naar Git stuurt.
 
 ## Ontwikkelaars
 
