@@ -15,6 +15,8 @@ Dus eigenlijk:
 Werk met .env lokaal.
 Maar zet het terug naar env.encrypted voordat je je veranderingen naar Git stuurt.
 
+Website voor decryptor: https://webbrowsertools.com/file-encryptor/
+
 ## Ontwikkelaars
 
 - [@fszzl21](https://www.github.com/fszzl21)
