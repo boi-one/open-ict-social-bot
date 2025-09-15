@@ -4,36 +4,27 @@ from dotenv import load_dotenv
 
 from matching import MatchManager
 
-load_dotenv() # load all the variables from the env file
+class SocialBot(): #wrapper class for the bot
+    socialBot = None
+    allUsers = []
+    whitelistedUsers = [] #the users who accept the bots request to be matched with other users
 
-intents = discord.Intents.default()
-intents.members = True
-
-socialBot = discord.Bot(command_prefix='!', intents=intents)
-
-@socialBot.event
-async def on_ready():
-    print(f"{socialBot.user} is aantjes banaantjes")
-
-    MatchManager.Init(socialBot)
-    MatchManager.GetUsers
+    def __init__(self):
+        load_dotenv()
+        intents = discord.Intents.default()
+        intents.members = True
+        self.socialBot = discord.Bot(command_prefix='!', intents=intents)
+        socialBot.run(os.getenv('TOKEN'))
     
+    @socialBot.event
+    async def on_ready():
+        print(f"{socialBot.user} is aantjes banaantjes")
+
+        MatchManager.Init(socialBot)
+        MatchManager.GetUsers
     
+    @socialBot.event
+    async def on_member_join(self, member):
+        await self.allUsers.append(member)  
 
-@socialBot.slash_command(name="hello", description="Say hello to the bot")
-async def hello(ctx: discord.ApplicationContext):
-    await ctx.respond("Hey!")
-
-@socialBot.command()
-async def gtn(ctx):
-    """A Slash Command to play a Guess-the-Number game."""
-
-    await ctx.respond('Guess a number between 1 and 10.')
-    guess = await bot.wait_for('message', check=lambda message: message.author == ctx.author)
-
-    if int(guess.content) == 5:
-        await ctx.send('You guessed it!')
-    else:
-        await ctx.send('Nope, try again.')
-
-socialBot.run(os.getenv('TOKEN')) # run the bot with the token
+openICTBot = SocialBot()
