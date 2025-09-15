@@ -2,10 +2,12 @@ import discord
 import os
 from dotenv import load_dotenv
 
-from matching import MatchManager
+from matching import Matching
+
+MatchManager = Matching()
 
 class SocialBot(): #wrapper class for the bot
-    socialBot = None
+    socialBot = discord.Bot()
     allUsers = []
     whitelistedUsers = [] #the users who accept the bots request to be matched with other users
 
@@ -14,17 +16,19 @@ class SocialBot(): #wrapper class for the bot
         intents = discord.Intents.default()
         intents.members = True
         self.socialBot = discord.Bot(command_prefix='!', intents=intents)
-        socialBot.run(os.getenv('TOKEN'))
-    
-    @socialBot.event
-    async def on_ready():
-        print(f"{socialBot.user} is aantjes banaantjes")
 
-        MatchManager.Init(socialBot)
-        MatchManager.GetUsers
+        self.socialBot.event(self.on_ready)
+        self.socialBot.event(self.on_member_join)
     
-    @socialBot.event
+        self.socialBot.run(os.getenv('TOKEN'))
+        
+    async def on_ready(self):
+        print(f"{self.socialBot.user} is aantjes banaantjes")
+
+        MatchManager.Init(self.socialBot)
+        MatchManager.GetUsers(userArray=self.allUsers)
+    
     async def on_member_join(self, member):
-        await self.allUsers.append(member)  
+        self.allUsers.append(member)  
 
 openICTBot = SocialBot()
