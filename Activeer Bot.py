@@ -1,2 +1,2 @@
-from openICTBot import *
+from SocialBot import *
 
