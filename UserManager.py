@@ -2,10 +2,13 @@ import sqlite3
 
 class User():
     name = None
+    id = None
     member = None
 
     def __init__(self, member):
         self.name = member.name
+        self.id = member.id
+        self.member = member
 
 class UserManager():
     database = None
@@ -18,13 +21,20 @@ class UserManager():
         self.dbCursor = self.database.cursor()
         #self.dbCursor.execute('blah blah sql code')
 
-    @staticmethod
     def DeleteUser(self, user):
+        self.allUsers = [u for u in self.allUsers if u.id != user.id]
+
+    def FindUser(self, user): #todo fix dat user gevonden kan worden en kijk dan verder naar de /voorkeur command, fix ook de dubbele message in DM
+        print("user ", user.name)
+        if self.allUsers.count < 1:
+            print("no users in list")
+            return
+        
         for u in self.allUsers:
-            if u.name == user.name:
-                self.allUsers.remove(u)
-                return
-        print("no user found")
+            if u.member == user:
+                return u
+        print("UserManager.py FindUser(self, user): could not find user")
+
                 
 
 #willen we direct de database gebruiken of een array met de data?

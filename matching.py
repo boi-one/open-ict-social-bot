@@ -4,7 +4,7 @@ class Matching:
     def Init(self, socialBot):
         self.guild = socialBot.get_guild(self.guildID)
     
-    def GetUsers(self, debug = True, userArray = []):
+    def GetUsers(self, userArray, debug = True):
         if self.guild:
             for member in self.guild.members:
                 userArray.append(member)
