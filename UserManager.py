@@ -1,9 +1,10 @@
 import sqlite3
 
 class User():
-    name = None
-    id = None
-    member = None
+    #name = None
+    #id = None
+    #member = None
+    available = True #if user is in a match
 
     def __init__(self, member):
         self.name = member.name
@@ -26,12 +27,13 @@ class UserManager():
 
     def FindUser(self, user): #todo fix dat user gevonden kan worden en kijk dan verder naar de /voorkeur command, fix ook de dubbele message in DM
         print("user ", user.name)
-        if self.allUsers.count < 1:
+        if len(self.allUsers) < 1:
             print("no users in list")
             return
         
         for u in self.allUsers:
-            if u.member == user:
+            if u.id == user.id:
+                print("user found")
                 return u
         print("UserManager.py FindUser(self, user): could not find user")
 

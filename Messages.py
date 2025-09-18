@@ -16,25 +16,17 @@ async def Invite(invitee):
         async def accept_callback(interaction):
             disableButtons(view)
             await interaction.response.edit_message(content="Vanaf nu zal je ge-invite kunnen worden!\nMet /voorkeur kan je altijd je voorkeur aanpassen.", view=view)
-            try:
-                await interaction.message.delete()
-            except Exception:
-                pass
             userManager.whitelistedUsers.append(invitee)
 
         async def decline_callback(interaction):
             disableButtons(view)
             await interaction.response.edit_message(content="Geen probleem.\nMet /voorkeur kan je altijd je voorkeur aanpassen.", view=view)
-            try:
-                await interaction.message.delete()
-            except Exception:
-                pass
+            #check of de gebruiker in de lijst zit en verwijder hem eruit
 
         buttonAccept.callback = accept_callback
         buttonDecline.callback = decline_callback
 
-        await invitee.member.send("Zou je gematched willen worden met andere gebruikers?", view=view)
-
+        await invitee.send("Zou je gematched willen worden met andere gebruikers?", view=view)
 
 #TODO:
 #users kunnen toestemming geven

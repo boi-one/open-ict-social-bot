@@ -1,8 +1,9 @@
 import discord
 import os
+import random
 from dotenv import load_dotenv
 
-from Matching import Matching
+from Matching import *
 from Messages import *
 from UserManager import User
 
@@ -13,6 +14,7 @@ class SocialBot(): #wrapper class for the bot
         load_dotenv()
         intents = discord.Intents.all()
         intents.members = True
+        intents.messages = True
         self.socialBot = discord.Bot(command_prefix='!', intents=intents)
 
         self.socialBot.event(self.on_ready)
@@ -23,10 +25,18 @@ class SocialBot(): #wrapper class for the bot
         async def CallInvite(ctx: discord.ApplicationContext):
             user = userManager.FindUser(ctx.author)
             if user:
-                await Invite()
+                await Invite(user)
             else:
                 print("user doesn't exist")
-    
+
+        @self.socialBot.slash_command(name="wmatch", description="stuur een uitnodiging naar een willekeurige gebruiker in de tribe (die open staat voor matches)")
+        async def RandomUserInvite(ctx: discord.ApplicationContext):
+            
+            sender = userManager.FindUser(ctx.author)
+            newMatch = None
+            if sender:
+                newMatch = Match(sender)
+
         self.socialBot.run(os.getenv('TOKEN'))
         
     async def on_ready(self):
@@ -43,7 +53,7 @@ class SocialBot(): #wrapper class for the bot
         print("haihai", newUser.name)
 
         userManager.allUsers.append(newUser)
-        await Invite(newUser)
+        await Invite(newUser.member)
     
     async def on_member_remove(self, member): #todo: fix dit het werkt NOG niet
         print("baibai", member.name)
