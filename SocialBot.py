@@ -35,7 +35,10 @@ class SocialBot(): #wrapper class for the bot
             sender = userManager.FindUser(ctx.author)
             newMatch = None
             if sender:
+                print(f"{sender} send invite")
                 newMatch = Match(sender)
+
+                await newMatch.InviteUserForMatch(newMatch)
 
         self.socialBot.run(os.getenv('TOKEN'))
         
@@ -53,9 +56,9 @@ class SocialBot(): #wrapper class for the bot
         print("haihai", newUser.name)
 
         userManager.allUsers.append(newUser)
-        await Invite(newUser.member)
+        await Invite(newUser)
     
-    async def on_member_remove(self, member): #todo: fix dit het werkt NOG niet
+    async def on_member_remove(self, member):
         print("baibai", member.name)
 
         userManager.DeleteUser(user=member)

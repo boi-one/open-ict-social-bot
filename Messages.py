@@ -16,6 +16,7 @@ async def Invite(invitee):
         async def accept_callback(interaction):
             disableButtons(view)
             await interaction.response.edit_message(content="Vanaf nu zal je ge-invite kunnen worden!\nMet /voorkeur kan je altijd je voorkeur aanpassen.", view=view)
+            invitee.consent = True
             userManager.whitelistedUsers.append(invitee)
 
         async def decline_callback(interaction):
@@ -26,10 +27,11 @@ async def Invite(invitee):
         buttonAccept.callback = accept_callback
         buttonDecline.callback = decline_callback
 
-        await invitee.send("Zou je gematched willen worden met andere gebruikers?", view=view)
+        await invitee.member.send("Zou je gematched willen worden met andere gebruikers?", view=view)
 
-#TODO:
-#users kunnen toestemming geven
-#users kunnen hun toestemming veranderen
-#users kunnen een random match starten
-    #match word gemaakt en communiceert met webserver en linkje word gestuurd door de
+# TODO:
+# fix de invite time en dat de invite kan verlopen
+# save en load naar database
+# gebruiker verwijderen uit de whitelist als hij zijn voorkeur aanpast en hij zit er toevallig in
+# users kunnen een random match starten 1/2 (af)
+    #match word gemaakt en communiceert met webserver en linkje word gestuurd door de 2/2 (doing)

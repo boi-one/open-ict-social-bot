@@ -1,15 +1,12 @@
 import sqlite3
 
 class User():
-    #name = None
-    #id = None
-    #member = None
-    available = True #if user is in a match
-
     def __init__(self, member):
         self.name = member.name
-        self.id = member.id
+        self.consent = False
+        self.uid = member.id
         self.member = member
+        self.available = True
 
 class UserManager():
     database = None
@@ -20,27 +17,29 @@ class UserManager():
     def __init__(self):
         self.database = sqlite3.connect('userdata.db')
         self.dbCursor = self.database.cursor()
-        #self.dbCursor.execute('blah blah sql code')
+        self.dbCursor.execute(("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT NOT NULL, available INTEGER NOT NULL CHECK (available IN (0,1)))"))
+        self.database.commit()
+
+    def SaveUsers():
+        pass
+
+    def LoadUser():
+        pass
 
     def DeleteUser(self, user):
         self.allUsers = [u for u in self.allUsers if u.id != user.id]
 
-    def FindUser(self, user): #todo fix dat user gevonden kan worden en kijk dan verder naar de /voorkeur command, fix ook de dubbele message in DM
-        print("user ", user.name)
+    def FindUser(self, user): #supposed to return the user wrapper class and NOT a discord.member instance
+        print("looking for user ", user.name)
         if len(self.allUsers) < 1:
             print("no users in list")
-            return
+            return None
         
         for u in self.allUsers:
-            if u.id == user.id:
-                print("user found")
+            if u.uid == user.id:
+                print("user found ", type(u))
                 return u
         print("UserManager.py FindUser(self, user): could not find user")
-
-                
-
-#willen we direct de database gebruiken of een array met de data?
-#data base direct gebruiken KAN de applicatie trager maken
-#array gebruiken zou meer memory kosten
+        return None
 
 userManager = UserManager()
