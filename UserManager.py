@@ -8,6 +8,18 @@ class User():
         self.member = member
         self.available = True
 
+    def Serialize(self):
+        data = {
+            "name":self.name,
+            "consent":self.consent,
+            "uid":self.uid,
+            "available":self.available
+        }
+        return data
+
+    def LoadUser():
+        pass
+
 class UserManager():
     database = None
     dbCursor = None #executes sql code
