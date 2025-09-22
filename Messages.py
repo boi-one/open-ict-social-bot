@@ -18,7 +18,7 @@ async def Invite(invitee):
             await interaction.response.edit_message(content="Vanaf nu zal je ge-invite kunnen worden!\nMet /voorkeur kan je altijd je voorkeur aanpassen.", view=view)
             invitee.consent = True
             userManager.whitelistedUsers.append(invitee)
-            userManager.SaveUsers()
+            userManager.SaveUsers(userManager.allUsers)
 
         async def decline_callback(interaction):
             disableButtons(view)

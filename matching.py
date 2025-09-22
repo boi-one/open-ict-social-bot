@@ -76,12 +76,13 @@ class Match():
     
 
 
-class Matching:
+class MatchManager:
+    matches = []
     guildID = 1414895106338848811
-    guild = None
     def Init(self, socialBot):
         self.guild = socialBot.get_guild(self.guildID)
-    
+        print(self.guild)
+
     def GetUsers(self):
         if self.guild:
             users = []
@@ -90,5 +91,5 @@ class Matching:
             userManager.SaveUsers(users)
             userManager.LoadUsers()
 
-class MatchManager():
-    matches = []
+matchManager = MatchManager()
+    

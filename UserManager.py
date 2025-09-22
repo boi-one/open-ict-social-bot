@@ -35,9 +35,11 @@ class UserManager():
             self.dbCursor.execute(sql, parameters)
         self.database.commit()
         print("saved user(s)")
+        print(len(self.allUsers))
+        print(len(self.whitelistedUsers)) #todo: if user has given consent put in whitelist (and if not work check why)
 
     def LoadUsers(self):
-        from Matching import Matching
+        from Matching import matchManager
 
         self.dbCursor.execute("SELECT id, name, available, consent FROM users")
         rows = self.dbCursor.fetchall()
@@ -46,17 +48,18 @@ class UserManager():
         
 
         for row in rows:
-            user = Matching.guild.get_member(row[0]) # todo GET THE MEMBER FROM ID!!!!!!!!!!!!!!!!
-            print(user)
-            break
+            user = matchManager.guild.get_member(row[0])
 
-            # newUser = User(self.FindUserWithID(row[0]))
-            # newUser.uid = row[0] 
-            # newUser.name = row[1]
-            # newUser.available = row[2]
-            # newUser.consent = row[3]
-            # print(newUser.member.name)
-            # self.allUsers.append(newUser)
+            newUser = User(user)
+            newUser.uid = row[0] 
+            newUser.name = row[1]
+            newUser.available = row[2]
+            newUser.consent = row[3]
+            self.allUsers.append(newUser)
+            if newUser.consent:
+                self.whitelistedUsers.append(newUser)
+        print(len(self.allUsers))
+        print(len(self.whitelistedUsers))
 
     def DeleteUser(self, user):
         self.allUsers = [u for u in self.allUsers if u.id != user.id]
@@ -77,14 +80,14 @@ class UserManager():
     
     #used to find discord.member instance for User instance
     def FindUserWithID(self, id):
-        from Matching import MatchManager
+        from Matching import matchManager
 
         print("looking for user with id ", id)
-        if len(MatchManager.guild.members) < 1:
+        if len(matchManager.guild.members) < 1:
             print("no users in list")
             return None
         
-        for u in MatchManager.guild.members:
+        for u in matchManager.guild.members:
             if u.id == id:
                 print("user found ", type(u))
                 return u

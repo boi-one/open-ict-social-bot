@@ -43,8 +43,7 @@ class SocialBot(): #wrapper class for the bot
         self.socialBot.run(os.getenv('TOKEN'))
         
     async def on_ready(self):
-        from Matching import Matching
-        matchManager = Matching()
+        from Matching import matchManager
         print(f"{self.socialBot.user} is aantjes banaantjes")
 
         matchManager.Init(self.socialBot)
