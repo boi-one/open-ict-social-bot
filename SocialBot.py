@@ -3,11 +3,10 @@ import os
 import random
 from dotenv import load_dotenv
 
-from Matching import *
 from Messages import *
-from UserManager import User
+from UserManager import *
 
-MatchManager = Matching()
+
 
 class SocialBot(): #wrapper class for the bot
     def __init__(self):
@@ -39,14 +38,17 @@ class SocialBot(): #wrapper class for the bot
                 newMatch = Match(sender)
 
                 await newMatch.InviteUserForMatch(newMatch)
+                
 
         self.socialBot.run(os.getenv('TOKEN'))
         
     async def on_ready(self):
+        from Matching import Matching
+        matchManager = Matching()
         print(f"{self.socialBot.user} is aantjes banaantjes")
 
-        MatchManager.Init(self.socialBot)
-        MatchManager.GetUsers(userArray=userManager.allUsers)
+        matchManager.Init(self.socialBot)
+        matchManager.GetUsers()
     
     async def on_member_join(self, member):
         if member.bot:

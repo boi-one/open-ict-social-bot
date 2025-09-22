@@ -1,10 +1,9 @@
 import discord
 import asyncio
 import random
-import json
-from UserManager import *
 from enum import Enum
 from Communications import SendData
+from UserManager import User, userManager
 
 
 class MatchState(Enum):
@@ -83,16 +82,13 @@ class Matching:
     def Init(self, socialBot):
         self.guild = socialBot.get_guild(self.guildID)
     
-    def GetUsers(self, userArray, debug = True):
+    def GetUsers(self):
         if self.guild:
+            users = []
             for member in self.guild.members:
-                userArray.append(User(member))
-
-                if debug:
-                    print("user:", member.name)
-        print("USER AMOUNT: ", len(userArray))
+                users.append(User(member))
+            userManager.SaveUsers(users)
+            userManager.LoadUsers()
 
 class MatchManager():
     matches = []
-
-matchManager = MatchManager()
