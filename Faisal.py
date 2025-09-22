@@ -1,10 +1,26 @@
-@bot.event # De bot stuurt een introductie bericht naar de beginnende student die de server aansluit
-async def on_member_join(member):
-    await member.send(
-        f'Welkom bij OPEN-ICT van Hogeschool Utrecht, {member.mention}!
-Leuk dat je er bent! Neem eerst even een kijkje bij #regels om op de hoogte te zijn van onze afspraken binnen de server. Onze bot staat klaar om je te ondersteunen, en via deze server kun je gemakkelijk communiceren met medestudenten en coaches.
-Wil je je medestudenten leren kennen? Neem dan vooral een kijkje in **#SOCIAL!** Daar kun je gezellig praten, vragen stellen of gewoon even ontspannen met anderen uit de OPEN-ICT.
-Let erop dat je nickname gelijk moet zijn aan je voor- en achternaam. Zo voldoe je aan onze regels, word je juist ingedeeld in groepen en ben je herkenbaar voor studenten en coaches.
-Als je nickname nu goed staat, kun je dit bericht verder negeren en wensen je een fijne studie toe!
-    )
+@bot.event
+async def on_ready():
+    print(f"{bot.user} is aantjes banaantjes")
 
+testingservers = []
+
+@bot.slash_command(description="Introductie bericht van het OPEN-ICT") # Is dit wel handig want dit richt meer op heel het ict server ipv alleen onze bot en spelen
+async def intro(ctx):
+    embed = discord.Embed(
+        title="Welkom bij het #SOCIAL kanaal!",
+        description="Leuk dat je er bent! Heb je interesse om te je medestudenten te kennen? De bot helpt je daarbij, je kan mij vragen om mensen voor te zoeken om samen spellen te spelen!",
+        color=discord.Colour.blurple(),
+    )
+    embed.add_field(name="Ik wil mij inschrijven/uitschrijven", value="Heb je eventueel interesse om uitgenodigd te worden wanneer andere studenten mensen zoeken om gezellig samen te spelen en praten? Je kan daarvoor inschrijven door de command **/opt-in** te gebruiken. Om uit te schrijven kan je ook de command **/opt-out** gebruiken.")
+    embed.add_field(name="Waar kan ik de spellen spelen?", value="Wij hebben een biebliotheek aan spellen voor ieder wat wils, Je kan alle spellen in ons website bekijken door hier op de link te drukken.(http://voorbeeld.nl) ")
+    embed.set_footer(text="OPEN-ICT SOCIAL BOT")
+    await ctx.respond(embed=embed)
+
+@bot.slash_command(description="Laat het huidige leaderboard zien")
+async def leaderboard(ctx):
+    embed = discord.Embed(
+        title="Top 10 social spelers",
+
+        embed.add_field(name=, value=print(f"1  ")
+        
+        color=discord.Colour.blurple(),1
