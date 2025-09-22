@@ -1,0 +1,7 @@
+/__pycache__/
+/bin
+/lib
+*.env
+*.encrypted
+lib64
+pyenv.cfg
