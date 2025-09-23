@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 class User():
     def __init__(self, member):
@@ -23,20 +24,29 @@ class UserManager():
     whitelistedUsers = [] #the users who accept the bots request to be matched with other users
 
     def __init__(self):
-        self.database = sqlite3.connect('userdata.db')
+        dbPath = 'userdata.db'
+        self.dbExists = os.path.exists(dbPath)
+        self.database = sqlite3.connect(dbPath)
         self.dbCursor = self.database.cursor()                   #id = 0                  #name = 1           #available = 2              #consent = 3
         self.dbCursor.execute(("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT NOT NULL, available BOOLEAN NOT NULL, consent BOOLEAN NOT NULL)"))
         self.database.commit()
 
+    def __del__(self): #save users when application quits
+        userManager.SaveUsers(self.allUsers)
+
     def SaveUsers(self, users):
+        #OverwriteSql = "INSERT INTO users (id, name, available, consent) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET name=excluded.name, available=excluded.available, consent=excluded.consent"
+        #NewSql = "INSERT INTO users (id, name, available, consent) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING"
+            
         for user in users:
             parameters = (int(user.uid), str(user.name), bool(user.available), bool(user.consent))
+            # sql = NewSql if self.dbExists else OverwriteSql
             sql = "INSERT INTO users (id, name, available, consent) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET name=excluded.name, available=excluded.available, consent=excluded.consent"
             self.dbCursor.execute(sql, parameters)
         self.database.commit()
         print("saved user(s)")
-        print(len(self.allUsers))
-        print(len(self.whitelistedUsers)) #todo: if user has given consent put in whitelist (and if not work check why)
+        print("saved ", len(self.allUsers))
+        print("saved whitelist ", len(self.whitelistedUsers)) #todo: if user has given consent put in whitelist (and if not work check why)
 
     def LoadUsers(self):
         from Matching import matchManager
@@ -44,22 +54,29 @@ class UserManager():
         self.dbCursor.execute("SELECT id, name, available, consent FROM users")
         rows = self.dbCursor.fetchall()
         
-        print("be4loading ", len(userManager.allUsers))
-        
+        if len(rows) < 1:
+            print("NOTHING INSIDE")
+            return
+        else: print("row size ", len(rows))
+
+        print("be4loading ", len(self.allUsers))
 
         for row in rows:
             user = matchManager.guild.get_member(row[0])
+            if user is None:
+                print("USER IS NONOOOOOONE")
+                continue
 
             newUser = User(user)
             newUser.uid = row[0] 
             newUser.name = row[1]
-            newUser.available = row[2]
-            newUser.consent = row[3]
+            newUser.available = bool(row[2])
+            newUser.consent = bool(row[3])
             self.allUsers.append(newUser)
             if newUser.consent:
                 self.whitelistedUsers.append(newUser)
-        print(len(self.allUsers))
-        print(len(self.whitelistedUsers))
+        print("L after ", len(self.allUsers))
+        print("L after wl ", len(self.whitelistedUsers))
 
     def DeleteUser(self, user):
         self.allUsers = [u for u in self.allUsers if u.id != user.id]

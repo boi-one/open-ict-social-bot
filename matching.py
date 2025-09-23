@@ -84,12 +84,17 @@ class MatchManager:
         print(self.guild)
 
     def GetUsers(self):
-        if self.guild:
-            users = []
-            for member in self.guild.members:
-                users.append(User(member))
-            userManager.SaveUsers(users)
+        if not self.guild: return
+
+        if userManager.dbExists:
             userManager.LoadUsers()
+            return
+
+        users = []
+        for member in self.guild.members:
+            users.append(User(member))
+            print("current users GetUsers(): ", len(users), users[len(users)-1].consent)
+        userManager.SaveUsers(users)
 
 matchManager = MatchManager()
     

@@ -30,7 +30,7 @@ class SocialBot(): #wrapper class for the bot
 
         @self.socialBot.slash_command(name="wmatch", description="stuur een uitnodiging naar een willekeurige gebruiker in de tribe (die open staat voor matches)")
         async def RandomUserInvite(ctx: discord.ApplicationContext):
-            
+            from Matching import Match  
             sender = userManager.FindUser(ctx.author)
             newMatch = None
             if sender:
@@ -52,7 +52,7 @@ class SocialBot(): #wrapper class for the bot
     async def on_member_join(self, member):
         if member.bot:
             return
-        
+
         newUser = User(member) #member is the user who just joined, this is saved in a wrapper class so its easy to save certain parts in the sql
         print("haihai", newUser.name)
 
