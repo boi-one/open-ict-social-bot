@@ -35,12 +35,8 @@ class UserManager():
         userManager.SaveUsers(self.allUsers)
 
     def SaveUsers(self, users):
-        #OverwriteSql = "INSERT INTO users (id, name, available, consent) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET name=excluded.name, available=excluded.available, consent=excluded.consent"
-        #NewSql = "INSERT INTO users (id, name, available, consent) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING"
-            
         for user in users:
             parameters = (int(user.uid), str(user.name), bool(user.available), bool(user.consent))
-            # sql = NewSql if self.dbExists else OverwriteSql
             sql = "INSERT INTO users (id, name, available, consent) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET name=excluded.name, available=excluded.available, consent=excluded.consent"
             self.dbCursor.execute(sql, parameters)
         self.database.commit()

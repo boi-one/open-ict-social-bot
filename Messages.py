@@ -17,13 +17,21 @@ async def Invite(invitee):
             disableButtons(view)
             await interaction.response.edit_message(content="Vanaf nu zal je ge-invite kunnen worden!\nMet /voorkeur kan je altijd je voorkeur aanpassen.", view=view)
             invitee.consent = True
-            userManager.whitelistedUsers.append(invitee)
-            userManager.SaveUsers(userManager.allUsers)
+
+            if invitee in userManager.whitelistedUsers:
+                 print("already whitelisted")
+            else:
+                userManager.whitelistedUsers.append(invitee)
+                userManager.SaveUsers(userManager.allUsers)
 
         async def decline_callback(interaction):
             disableButtons(view)
             await interaction.response.edit_message(content="Geen probleem.\nMet /voorkeur kan je altijd je voorkeur aanpassen.", view=view)
-            #check of de gebruiker in de lijst zit en verwijder hem eruit
+            if invitee in userManager.whitelistedUsers:
+                print("wl users ", len(userManager.whitelistedUsers))
+                userManager.whitelistedUsers.remove(invitee)
+                userManager.SaveUsers(userManager.allUsers)
+                print("user removed ", len(userManager.whitelistedUsers))
 
         buttonAccept.callback = accept_callback
         buttonDecline.callback = decline_callback
