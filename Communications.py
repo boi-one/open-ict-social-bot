@@ -3,7 +3,7 @@ import requests
 import json
 from Matching import *
 
-url = 'http://localhost:3000/get-match'
+url = 'http://localhost:3000/create-match'
 
 def SendData(match):
     data = match.Serialize()
