@@ -1,16 +1,22 @@
+# OPEN-ICT Social Bot (Back-end Only)
 
-# OPEN-ICT SOCIAL BOT
+Voor ons eerste schoolproject hebben wij een back-end systeem ontwikkeld voor een digitaal bot waarbij de studenten wordt begeleid naar de website om elkaar op een leuke manier beter leren kennen en vriendschappen kunnen opbouwen.
 
-[link](https://github.com/boi-one/open-ict-social-bot-website) naar de website repo
+Deze repository bevat **alleen de back-end**. De front-end wordt apart beheerd door de overige squadleden (Rayan, Tijmen en Robert).
 
-Voor ons project hebben wij een bot ontwikkeld om het aspect van socialisatie voor beginnende studenten binnen het OPEN-ICT te bevorderen.
+---
 
-## LET OP 
-- WIP 
-- DIT IS ALLEEN HET BACKEND
+## Functionaliteiten
+
+- Mogelijkheid om via de bot doorverwezen te worden naar de website.
+- Verzamelt gebruikersdata van de front-end voor het tonen van een leaderboard.
+- Ondersteuning voor meerdere bot-commando’s voor een soepele gebruikerservaring.
+- De back-end is gekoppeld aan de front-end via een gedeelde database.
+
+---
+
+> Deze bot vereist een private token om te functioneren. Dit token wordt niet meegeleverd en is eigendom van de ontwikkelaars.
 
 ## Ontwikkelaars
-
 - [@fszzl21](https://www.github.com/fszzl21)
 - [@boi-one](https://github.com/boi-one)
-- [@babacho](https://github.com/babacho)
