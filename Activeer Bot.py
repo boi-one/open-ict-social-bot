@@ -51,8 +51,9 @@ async def leaderboard(ctx):
             color=discord.Colour.blurple()
         )
         # Test field om te kijken welke beter past
-        for x in Mockusers:
-            embed.add_field(name="", value=x[0])
+        for users in range(10):
+                embed.add_field(name=Mockusers[users][0])
+                
         embed.add_field(name="Hoe verzamel je punten?", value="Door matches te maken en te winnen tijdens het spellen verzamel je wins!", inline=True)
 
         embed.set_footer(text="Leaderboard wordt bijgewerkt wanneer de tijd rijp is.")
@@ -61,4 +62,3 @@ async def leaderboard(ctx):
 
 
 bot.run(os.getenv('TOKEN')) # De bot werkt pas alleen met een token.
->>>>>>> cae0fdac547b642528eb4d2d60e3aa9cd1a9cf52
