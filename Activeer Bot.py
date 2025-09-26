@@ -58,7 +58,7 @@ async def leaderboard(ctx):
 
         embed.set_footer(text="Leaderboard wordt bijgewerkt wanneer de tijd rijp is.")
 
-        await ctx.respond("Hier je leaderboard vieze sweat", embed=embed)
+        await ctx.respond("", embed=embed)
 
 
 bot.run(os.getenv('TOKEN')) # De bot werkt pas alleen met een token.
