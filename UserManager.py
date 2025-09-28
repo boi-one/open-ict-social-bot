@@ -8,6 +8,7 @@ class User():
         self.member = member
         self.consent = False
         self.available = True
+        self.wins = 0
     def Serialize(self):
         data = {
             "name":self.name,
