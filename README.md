@@ -4,6 +4,8 @@ Voor ons eerste schoolproject hebben wij een back-end systeem ontwikkeld voor ee
 
 Deze repository bevat **alleen de back-end**. De front-end wordt apart beheerd door de overige squadleden (Rayan, Tijmen en Robert).
 
+[link naar de website repository](https://github.com/boi-one/open-ict-social-bot-website)
+
 ---
 
 ## Functionaliteiten
