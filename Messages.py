@@ -2,7 +2,9 @@ import discord
 from UserManager import userManager
 
 def disableButtons(view):
+    print("disable")
     for child in view.children:
+        print("cji;d")
         if isinstance(child, discord.ui.Button):
             child.disabled = True
 
@@ -36,11 +38,11 @@ async def Invite(invitee):
         buttonAccept.callback = accept_callback
         buttonDecline.callback = decline_callback
 
-        await invitee.member.send("Zou je gematched willen worden met andere gebruikers?", view=view)
+        await invitee.member.send("Zou je gematched willen worden met andere gebruikers?", view=view) 
+
+async def SendMatchLink(link, match):
+       await match.host.member.send(f"klik hier om mee te doen met de match: {link}")
+       await match.invitee.member.send(f"klik hier om mee te doen met de match: {link}") 
 
 # TODO:
 # fix de invite time en dat de invite kan verlopen
-# save en load naar database
-# gebruiker verwijderen uit de whitelist als hij zijn voorkeur aanpast en hij zit er toevallig in
-# users kunnen een random match starten 1/2 (af)
-    #match word gemaakt en communiceert met webserver en linkje word gestuurd door de 2/2 (doing)

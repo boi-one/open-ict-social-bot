@@ -39,6 +39,7 @@ class Match():
         self.invitee = None
 
     async def InviteUserForMatch(self, match, expireTime = 3):
+        from Messages import disableButtons
         print(f"{self.host.name} send invite to {self.invitee.name}!")
         view = discord.ui.View()
         buttonAccept = discord.ui.Button(label="accepteer invite", style=discord.ButtonStyle.blurple)
@@ -47,22 +48,25 @@ class Match():
         async def accept_callback(interaction):
             if(match.state != MatchState.OVER):
                 match.state = MatchState.START
+                disableButtons(view)
                 print(f"\nhost      : {self.host.name}\ninvitee   : {self.invitee.name}\nid        : {self.id}\nmatchstate: {match.state}")
                 print("accepted")
-                SendData(match)
-
-                
+                await SendData(match)  
+                await interaction.response.defer() 
+            else:
+                await interaction.response.send_message("Invite niet meer geldig.", ephemeral=True)
 
         buttonAccept.callback = accept_callback
 
         def expire_callback():
+            disableButtons(view)
             print("disabled")
             buttonAccept.disabled = True
 
         await self.invitee.member.send(f"{self.host.name} wilt een spel met je spelen.", view=view)
         await asyncio.sleep(expireTime) #todo make the invite expire
-        #print("expired")
-        #expire_callback()
+        print("expired")
+        expire_callback()
 
     def Serialize(self):
         data = {
