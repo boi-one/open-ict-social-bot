@@ -5,3 +5,4 @@
 *.encrypted
 lib64
 pyenv.cfg
+*.db
